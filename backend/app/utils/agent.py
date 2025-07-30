@@ -1,24 +1,37 @@
 import ollama
+import os
+import json
+
+ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+client = ollama.Client(host=ollama_host)
+
 
 def call_iam_agent(prompt: str) -> dict:
     system_prompt = (
-        "You are an AWS IAM Policy assistant. Given a user prompt, "
-        "generate a minimal and secure JSON IAM policy using AWS syntax. "
-        "Do not explain, only return raw JSON. Avoid over-permissioning."
-    )
-
-    response = ollama.chat(
-        model='mistral',
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt}
-        ]
+        "You are a strict AWS IAM policy generator. "
+        "Only return valid JSON IAM policies. No explanations."
     )
 
     try:
-        # Try to safely extract JSON from model response
-        import json
+        response = client.chat(
+            model='mistral',
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt}
+            ],
+            stream=False
+        )
         raw = response['message']['content']
         return json.loads(raw)
+
+    except json.JSONDecodeError:
+        return {
+            "error": "❌ Failed to parse JSON from Ollama response.",
+            "raw_output": raw
+        }
+
     except Exception as e:
-        return {"error": "Failed to parse policy", "raw_output": raw, "exception": str(e)}
+        return {
+            "error": "💥 Unexpected Ollama failure",
+            "details": str(e)
+        }
