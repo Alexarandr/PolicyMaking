@@ -1,6 +1,7 @@
 import ollama
 import os
 import json
+import re
 
 ollama_host = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 client = ollama.Client(host=ollama_host)
@@ -14,7 +15,7 @@ def call_iam_agent(prompt: str) -> dict:
 
     try:
         response = client.chat(
-            model='mistral',
+            model='gemma:2b',
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt}
@@ -22,7 +23,11 @@ def call_iam_agent(prompt: str) -> dict:
             stream=False
         )
         raw = response['message']['content']
-        return json.loads(raw)
+
+        # 💡 Nettoyage des ```json blocs Markdown
+        cleaned = re.sub(r"^```json\n|\n```$", "", raw.strip())
+
+        return json.loads(cleaned)
 
     except json.JSONDecodeError:
         return {
