@@ -37,9 +37,9 @@ function App() {
   return (
     <div className="min-h-screen bg-[#0d1117] text-white">
       <header className="border-b border-[#30363d] px-4 py-2 flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-green-500 rounded-md"></div>
-          <span className="text-white font-medium">IAM Policy Generator</span>
+        <div className="flex items-center space-x-3">
+          <img src="/logo.png" alt="GRAIN" className="w-8 h-8" />
+          <span className="text-white font-medium text-lg">GRAIN</span>
         </div>
         <div className="flex items-center space-x-4">
           {isAuthenticated ? (
@@ -87,12 +87,14 @@ function App() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 py-8 space-y-6">
-        <div className="text-center space-y-2">
-          <h1 className="text-4xl font-bold">IAM Policy Generator</h1>
-          <p className="text-gray-400">Generate AWS IAM policies using natural language. Powered by local AI for secure, private policy creation.</p>
-          <div className="flex items-center justify-center space-x-2 text-green-500">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            <span className="text-sm">All processing happens locally - no data leaves your environment</span>
+        <div className="text-center mb-8">
+          <div className="flex items-center justify-center space-x-4 mb-2">
+            <img src="/logo.png" alt="GRAIN" className="w-12 h-12" />
+            <h1 className="text-3xl font-bold tracking-wide">GRAIN</h1>
+          </div>
+          <div className="flex items-center justify-center space-x-2 text-green-500 text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Secure, local AI-powered IAM policy generation</span>
           </div>
         </div>
 

@@ -45,9 +45,13 @@ export default function SettingsModal({ isOpen, onClose }) {
 
             <div>
               <h3 className="text-sm font-medium text-gray-300 mb-2">About</h3>
+              <div className="flex items-center space-x-2 mb-2">
+                <img src="/logo.png" alt="GRAIN" className="w-6 h-6" />
+                <span className="text-sm text-white font-medium">GRAIN v1.0.0</span>
+              </div>
               <p className="text-sm text-gray-400">
-                IAM Policy Generator v1.0.0<br/>
-                Running on local AI for secure, private policy creation.
+                Secure AWS IAM Policy Generation<br/>
+                Running on local AI for maximum privacy.
               </p>
             </div>
           </div>
