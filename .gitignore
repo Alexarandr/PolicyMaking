@@ -93,3 +93,13 @@ frontend/yarn.lock
 backend/.env
 backend/__pycache__/
 backend/.ruff_cache/
+
+
+# CUSTOM FILES 
+node_modules/
+.env
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
+ollama/
