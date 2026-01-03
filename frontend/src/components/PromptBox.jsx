@@ -6,7 +6,21 @@ export default function PromptBox({ onSubmit }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(prompt);
+    if (prompt.trim()) {
+      onSubmit(prompt);
+      setPrompt("");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    // Ctrl+Enter (ou Cmd+Enter sur Mac) pour envoyer
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      if (prompt.trim()) {
+        onSubmit(prompt);
+        setPrompt("");
+      }
+    }
   };
 
   return (
@@ -17,12 +31,13 @@ export default function PromptBox({ onSubmit }) {
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Example: Create a policy for S3 read-only access to bucket 'my-data'"
             rows={8}
             className="w-full bg-[#0d1117] text-white font-mono p-3 rounded-md border border-[#30363d] focus:outline-none focus:ring-1 focus:ring-green-500 resize-none text-sm"
           />
           <div className="text-xs text-gray-500 mt-2">
-            Tip: Be specific about services, actions, and resources
+            Tip: Be specific about services, actions, and resources • Press <kbd className="bg-[#0d1117] border border-[#30363d] px-2 py-1 rounded">Ctrl+Enter</kbd> to send
           </div>
         </div>
         <div className="border-t border-[#30363d] p-4 flex items-center justify-between">

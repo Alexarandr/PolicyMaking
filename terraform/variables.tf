@@ -1,7 +1,17 @@
-variable "frontend_port" {
-  default = 3000
+variable "nginx_port" {
+  description = "Nginx reverse proxy port"
+  type        = number
+  default     = 80
 }
 
-variable "backend_port" {
-  default = 8000
+variable "ollama_port" {
+  description = "OLLAMA API port"
+  type        = number
+  default     = 11434
+}
+
+variable "app_name" {
+  description = "Application name"
+  type        = string
+  default     = "policymaking"
 }
