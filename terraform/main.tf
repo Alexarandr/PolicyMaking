@@ -40,6 +40,8 @@ resource "docker_container" "backend" {
     external = var.backend_port
   }
   env = ["OLLAMA_HOST=http://ollama:11434"]
+  
+  depends_on = [docker_container.ollama]
 }
 
 # --- FRONTEND ---
@@ -58,4 +60,6 @@ resource "docker_container" "frontend" {
     internal = var.frontend_port
     external = var.frontend_port
   }
+  
+  depends_on = [docker_container.backend]
 }
