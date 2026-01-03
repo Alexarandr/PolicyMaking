@@ -11,7 +11,7 @@ AI-powered policy analysis and generation platform. Analyzes policy documents, i
 **Requirements:** Docker & Docker Compose
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Alexarandr/PolicyMaking
 cd PolicyMaking
 docker compose up -d
 ```
