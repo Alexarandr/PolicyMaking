@@ -48,6 +48,15 @@ instance/
 
 # Misc
 .ipynb_checkpoints
+
+# === DOCKER & DEPLOYMENT ===
+ollama_data/
+.env
+.env.local
+.env.*.local
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate*
 .ropeproject/
 .spyderproject/
 .marimo/

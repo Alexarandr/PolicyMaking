@@ -13,21 +13,23 @@ AI-powered policy analysis and generation platform. Analyzes policy documents, i
 ```bash
 git clone <repository-url>
 cd PolicyMaking
-docker-compose up -d
+docker compose up -d
 ```
 
 Access:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000/docs
-- OLLAMA: http://localhost:11434
+- **Application:** http://localhost (via nginx reverse proxy)
+- **Backend API:** http://localhost/api/
+- **API Docs:** http://localhost/docs
+- **OLLAMA Direct:** http://localhost:11434
 
 ## Services
 
-| Service | Port | Tech |
-|---------|------|------|
-| Frontend | 3000 | React 18 + Tailwind |
-| Backend | 8000 | FastAPI + Python 3.11 |
-| OLLAMA | 11434 | LLM Runtime |
+| Service | Port | Tech | Purpose |
+|---------|------|------|---------|
+| Nginx | 80 | Nginx Alpine | Reverse proxy & load balancer |
+| Frontend | Internal | React 18 + Tailwind | Web UI |
+| Backend | Internal | FastAPI + Python 3.11 | API server |
+| OLLAMA | 11434 | LLM Runtime | Language model inference |
 
 ## Project Structure
 
@@ -73,17 +75,46 @@ npm start
 ## Common Commands
 
 ```bash
-# Start all services
-docker-compose up -d
+# Start all services with reverse proxy
+docker compose up -d
 
 # Stop services
-docker-compose down
+docker compose down
 
 # View logs
-docker-compose logs -f <service>
+docker compose logs -f <service>
 
 # Check status
-docker-compose ps
+docker compose ps
+
+# View reverse proxy logs
+docker compose logs -f nginx
+```
+
+## Architecture with Nginx Reverse Proxy
+
+```
+┌─────────────────────────────────┐
+│   Client Browser (Port 80)       │
+└────────────────┬────────────────┘
+                 │
+┌────────────────▼────────────────┐
+│  Nginx Reverse Proxy (Port 80)   │
+│  - Routes / → Frontend           │
+│  - Routes /api/* → Backend       │
+│  - Routes /docs → API Docs       │
+└────────────────┬────────────────┘
+        ┌────────┴────────┐
+        │                 │
+┌───────▼──────┐  ┌──────▼──────┐
+│   Frontend   │  │   Backend    │
+│   (React)    │  │  (FastAPI)   │
+└──────────────┘  └──────┬───────┘
+                         │
+                  ┌──────▼──────┐
+                  │   OLLAMA     │
+                  │ (LLM Models) │
+                  └──────────────┘
 ```
 
 ## Terraform Deployment
