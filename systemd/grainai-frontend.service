@@ -1,0 +1,35 @@
+[Unit]
+Description=GrainAI Frontend Web Service
+Documentation=https://github.com/Alexarandr/PolicyMaking
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=grainai
+Group=grainai
+WorkingDirectory=/opt/grainai/frontend
+ExecStart=/usr/bin/python3 -m http.server 3000 --directory build
+Restart=on-failure
+RestartSec=5s
+StartLimitInterval=600s
+StartLimitBurst=3
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=grainai-frontend
+
+# Environment
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+
+# Resource limits
+MemoryLimit=512M
+CPUQuota=50%
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

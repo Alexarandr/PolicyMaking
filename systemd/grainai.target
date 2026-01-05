@@ -1,0 +1,7 @@
+[Unit]
+Description=GrainAI Full Stack (OLLAMA + Backend + Frontend)
+Documentation=https://github.com/Alexarandr/PolicyMaking
+Wants=grainai-ollama.service grainai-backend.service grainai-frontend.service
+
+[Install]
+WantedBy=multi-user.target
